@@ -1,0 +1,12 @@
+{
+  "name": "githubcopilotcheck-mcp-server",
+  "version": "0.1.0",
+  "description": "Minimal MCP server for the githubcopilotcheck workspace.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.4"
+  }
+}
