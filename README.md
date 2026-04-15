@@ -19,12 +19,15 @@ npm start
 
 - `GET /` — basic landing page
 - `GET /health` — health check
+- `POST /login` — SQL-backed login using SQLite
 - `POST /mcp` — receive a JSON payload and echo it back
 
-Example request:
+### Login example
 
 ```bash
-curl -X POST http://localhost:3000/mcp \
+curl -X POST http://localhost:3000/login \
   -H "Content-Type: application/json" \
-  -d '{"request":"Hello","context":{"source":"test"}}'
+  -d '{"email":"user@example.com","password":"password123"}'
 ```
+
+The server uses a local SQLite database file named `users.db` and seeds a default user on first startup.

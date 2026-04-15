@@ -1,7 +1,7 @@
 const loginForm = document.getElementById('loginForm');
 const messageElement = document.getElementById('message');
 
-loginForm.addEventListener('submit', function (event) {
+loginForm.addEventListener('submit', async function (event) {
   event.preventDefault();
 
   const email = document.getElementById('email').value.trim();
@@ -15,15 +15,25 @@ loginForm.addEventListener('submit', function (event) {
     return;
   }
 
-  const validUser = {
-    email: 'user@example.com',
-    password: 'password123'
-  };
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-  if (email === validUser.email && password === validUser.password) {
-    messageElement.textContent = 'Login successful!';
-    messageElement.classList.add('success');
-  } else {
-    messageElement.textContent = 'Invalid email or password.';
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      messageElement.textContent = data.message || 'Login successful!';
+      messageElement.classList.add('success');
+    } else {
+      messageElement.textContent = data.message || 'Invalid email or password.';
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    messageElement.textContent = 'Unable to reach the login server.';
   }
 });
